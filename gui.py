@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import font
+from PIL import Image, ImageTk
 
 def app_gui(title, width, height):
 
@@ -34,11 +35,21 @@ def app_gui(title, width, height):
     SESSIONS_FRAME_BORDER_DIST = 20
     SESSIONS_FRAME_WIDTH = 400
     SESSIONS_FRAME_HEIGHT = 300
-    sessions_frame = tk.Frame(root, bg="lightgray", relief=tk.SUNKEN, borderwidth=2, width=SESSIONS_FRAME_WIDTH, height=SESSIONS_FRAME_HEIGHT)
+    SESSIONS_FRAME_BG = "#999999"
+    sessions_frame = tk.Frame(root, bg=SESSIONS_FRAME_BG, relief=tk.SUNKEN, borderwidth=2, width=SESSIONS_FRAME_WIDTH, height=SESSIONS_FRAME_HEIGHT)
     sessions_frame.pack(fill=tk.BOTH, expand=True, padx=50, pady=150)
 
-    sessions_text = tk.Label(sessions_frame, text="Sessions:", font=heading2, fg=ui_config_dict["text_colour2"], bg="lightgray")
+    sessions_text = tk.Label(sessions_frame, text="Sessions", font=heading2, fg=ui_config_dict["text_colour2"], bg=SESSIONS_FRAME_BG)
     sessions_text.pack(side=tk.LEFT, padx=10, pady=10, anchor="nw")
+
+    plus_icon = Image.open("assets/plus_icon.png")
+    plus_icon = plus_icon.resize((20, 20))
+    plus_icon_in_button = ImageTk.PhotoImage(plus_icon)
+    BUTTON_FONT_SIZE = 12
+    create_session_button = tk.Button(sessions_frame, text=" Create New Session ", bg="lightgray", 
+                                      font=(app_font, BUTTON_FONT_SIZE), image=plus_icon_in_button, compound="left", borderwidth=2, 
+                                      relief="raised", cursor="hand2")
+    create_session_button.pack(side=tk.RIGHT, anchor=tk.NE, padx=20, pady=20)
 
     root.geometry(f"{width}x{height}")
     root.title(title)
