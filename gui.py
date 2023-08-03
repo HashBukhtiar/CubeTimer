@@ -32,18 +32,18 @@ def app_gui(title, width, height):
     byline = tk.Label(text="by Hashim Bukhtiar", font=heading3, fg=ui_config_dict["text_colour2"], bg=ui_config_dict["text_bg_colour1"])
     byline.place(relx=0.5, y=75, anchor="center")
 
-    SESSIONS_FRAME_BORDER_DIST = 20
+    SESSIONS_FRAME_X_DIST = 50
+    SESSIONS_FRAME_Y_DIST = 150
     SESSIONS_FRAME_WIDTH = 400
     SESSIONS_FRAME_HEIGHT = 300
     SESSIONS_FRAME_BG = "#999999"
     sessions_frame = tk.Frame(root, bg=SESSIONS_FRAME_BG, relief=tk.SUNKEN, borderwidth=2, width=SESSIONS_FRAME_WIDTH, height=SESSIONS_FRAME_HEIGHT)
-    sessions_frame.pack(fill=tk.BOTH, expand=True, padx=50, pady=150)
+    sessions_frame.pack(fill=tk.BOTH, expand=True, padx=SESSIONS_FRAME_X_DIST, pady=SESSIONS_FRAME_Y_DIST)
 
     sessions_text = tk.Label(sessions_frame, text="Sessions", font=heading2, fg=ui_config_dict["text_colour2"], bg=SESSIONS_FRAME_BG)
     sessions_text.pack(side=tk.LEFT, padx=10, pady=10, anchor="nw")
 
-    plus_icon = Image.open("assets/plus_icon.png")
-    plus_icon = plus_icon.resize((20, 20))
+    plus_icon = Image.open("assets/plus_icon.png").resize((20, 20))
     plus_icon_in_button = ImageTk.PhotoImage(plus_icon)
     BUTTON_FONT_SIZE = 12
     create_session_button = tk.Button(sessions_frame, text=" Create New Session ", bg="lightgray", 
