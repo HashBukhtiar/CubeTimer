@@ -10,8 +10,9 @@ def app_gui(title, width, height):
     ui_config_dict = {
         "text_colour1" : ui_config_lst[0],
         "text_bg_colour1" : ui_config_lst[1],
-        "bg_colour" : ui_config_lst[2],
-        "text_colour2" : ui_config_lst[3]
+        "bg_colour1" : ui_config_lst[2],
+        "text_colour2" : ui_config_lst[3],
+        "bg_colour2" : ui_config_lst[4]
     }
 
     app_font = "Helvecta"
@@ -48,23 +49,40 @@ def app_gui(title, width, height):
     BUTTON_FONT_SIZE = 12
     create_session_button = tk.Button(sessions_frame, text=" Create New Session ", bg="lightgray", 
                                       font=(app_font, BUTTON_FONT_SIZE), image=plus_icon_in_button, compound="left", borderwidth=2, 
-                                      relief="raised", cursor="hand2", command=lambda: create_new_session(sessions_frame))
+                                      relief="raised", cursor="hand2", command=lambda: create_new_session(sessions_frame, heading2, app_font))
     create_session_button.grid(row=0, column=1, sticky="ne", padx=20, pady=20)
     #create_session_button.pack(padx=10, pady=10, anchor="ne")
 
     root.geometry(f"{width}x{height}")
     root.title(title)
-    root.configure(background=ui_config_dict["bg_colour"])
+    root.configure(background=ui_config_dict["bg_colour1"])
 
     root.mainloop()
 
-def create_new_session(frame):
-    num_session_buttons = len(frame.winfo_children()) - 2
-    new_pos_increment = num_session_buttons*50
-    new_button = tk.Button(frame, text="New Session", width=70, height=2)
-    new_button.place(x=15, y=75+new_pos_increment)
-    #new_button.pack(padx=10, pady=5, anchor="w")
-    print("New session button created")
+def create_new_session(frame, text_font, app_font, window_bg_colour="#4a4a4a"):
+    new_session_window = tk.Toplevel(frame, bg=window_bg_colour)
+    new_session_window.title("Create New Session")
+    new_session_window.geometry("400x150")
+
+    session_name_label = tk.Label(new_session_window, text="Session Name:", font=text_font, bg=window_bg_colour, fg="#ffffff")
+    session_name_label.pack()
+
+    session_name_entry = tk.Entry(new_session_window, width=100)
+    session_name_entry.pack(padx=20, pady=20)
+
+    def create_session():
+        name = session_name_entry.get()
+        if name:
+            new_session_button = tk.Button(frame, text=name, width=18, font=app_font, borderwidth=2, relief="raised", cursor="hand2")
+            new_session_button.grid(row=len(frame.winfo_children()), column=0, padx=10, pady=5, sticky="w")
+            print(f"New session button created: {name}")
+
+            new_session_window.destroy()
+
+    create_button = tk.Button(new_session_window, text="Create", command=create_session)
+    create_button.pack()
+
+    new_session_window.bind("<Return>", lambda event: create_button.invoke())
 
 def pick_theme():
     # () -> str
@@ -83,10 +101,11 @@ def theme_config(theme):
     if theme == "default":
         text_colour1 = "#ffffff"
         text_bg_colour1 = "#87CEEB"
-        bg_colour = "#87CEEB"
+        bg_colour1 = "#87CEEB"
         text_colour2 = "#343578"
+        bg_colour2 = "#5999ff"
     
-    return text_colour1, text_bg_colour1, bg_colour, text_colour2
+    return text_colour1, text_bg_colour1, bg_colour1, text_colour2, bg_colour2
 
 def pick_text_font():
     # () -> str
