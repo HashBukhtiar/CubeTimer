@@ -77,7 +77,7 @@ def create_new_session(frame, text_font, app_font, window_bg_colour="#4a4a4a"):
         name_duplicates = 0
 
         for s in sessions:
-            if name == s[:-4] or name == s:
+            if name == s or (s[-1] == ")" and s[-3] == "(" and s[-2].isdigit() and name == s[:-4]):
                 name_duplicates += 1
         if name_duplicates > 0:
             name += f" ({name_duplicates})"
