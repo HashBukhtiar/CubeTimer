@@ -18,6 +18,9 @@ def app_gui(title, width, height):
     app_font = "Helvecta"
     #app_font = pick_text_font()
 
+    global sessions
+    sessions = []
+
     TITLE_SIZE = 40
     SECTION_HEADING_SIZE = 25
     SUBTITLE_SIZE = 15
@@ -42,7 +45,6 @@ def app_gui(title, width, height):
     sessions_text = tk.Label(sessions_frame, text="Sessions", font=heading2, fg=ui_config_dict["text_colour2"], bg=SESSIONS_FRAME_BG)
     sessions_text.grid(row=0, column=0, padx=10, pady=10, sticky="nw")
     #sessions_text.pack(padx=10, pady=10, anchor="nw")
-
 
     plus_icon = Image.open("assets\plus_icon.png").resize((20, 20))
     plus_icon_in_button = ImageTk.PhotoImage(plus_icon)
@@ -72,6 +74,16 @@ def create_new_session(frame, text_font, app_font, window_bg_colour="#4a4a4a"):
 
     def create_session():
         name = session_name_entry.get()
+        name_duplicates = 0
+
+        for s in sessions:
+            if name == s[:-4] or name == s:
+                name_duplicates += 1
+        if name_duplicates > 0:
+            name += f" ({name_duplicates})"
+        sessions.append(name)
+        print(f"All sessions: {sessions}")
+
         if name:
             new_session_button = tk.Button(frame, text=name, width=18, font=app_font, borderwidth=2, relief="raised", cursor="hand2")
             new_session_button.grid(row=len(frame.winfo_children()), column=0, padx=10, pady=5, sticky="w")
