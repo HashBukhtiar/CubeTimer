@@ -7,6 +7,7 @@ def app_gui(title, width, height):
     app_theme = "default"
     #app_theme = pick_theme()
     ui_config_lst = theme_config(app_theme)
+    global ui_config_dict
     ui_config_dict = {
         "text_colour1" : ui_config_lst[0],
         "text_bg_colour1" : ui_config_lst[1],
@@ -60,6 +61,9 @@ def app_gui(title, width, height):
     root.configure(background=ui_config_dict["bg_colour1"])
 
     root.mainloop()
+
+def create_new_session_frame(homeframe):
+    return
 
 def create_new_session(frame, text_font, app_font, window_bg_colour="#4a4a4a"):
     new_session_window = tk.Toplevel(frame, bg=window_bg_colour)
