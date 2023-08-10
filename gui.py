@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import font
 from PIL import Image, ImageTk
+from logic import *
 
 def app_gui(title, width, height):
     root = tk.Tk()
@@ -20,7 +21,9 @@ def app_gui(title, width, height):
     #app_font = pick_text_font()
 
     global sessions
+    global sessions_buttons
     sessions = []
+    sessions_buttons = {}
 
     TITLE_SIZE = 40
     SECTION_HEADING_SIZE = 25
@@ -91,7 +94,9 @@ def create_new_session(frame, text_font, app_font, window_bg_colour="#4a4a4a"):
         if name:
             new_session_button = tk.Button(frame, text=name, width=18, font=app_font, borderwidth=2, relief="raised", cursor="hand2")
             new_session_button.grid(row=len(frame.winfo_children()), column=0, padx=10, pady=5, sticky="w")
-            print(f"New session button created: {name}")
+            new_session_button_id = generate_session_button_id(sessions_buttons)
+            sessions_buttons[new_session_button_id] = [name, new_session_button]
+            print(f"New session button created: '{name}', ID: {new_session_button_id}")
 
             new_session_window.destroy()
 

@@ -1,5 +1,14 @@
 from random import *
 
+def generate_session_button_id(button_id_dict):
+    s = "abcdefghijklmnopqrstuvwxyz0123456789"
+    button_id = "B"
+    while True:
+        for _ in range(9):
+            button_id += s[randint(0, 35)]
+        if button_id not in button_id_dict.keys():
+            return button_id
+
 def generate_3x3_scramble(scramble_length):
     # Make a WCA-eligible scramble for the 3x3x3 Rubik's Cube
     # int -> str
